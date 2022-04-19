@@ -1,10 +1,12 @@
 import React, { memo, Fragment, useState, useEffect } from 'react';
 import defaultImage from "./defaultImage.jpg";
+import ProgressBar from './ProgressBar';
 
 export function Playlist(props) {
     const {onRemove, onLoad} = props;
     const [playlist, setPlaylist] = useState([]);
     const [mutag] = useState(window.mutag);
+    const [showProgress, setShowProgress] = useState(false);
     let [trackIndex, setTrackIndex] = useState(-1);
   
     useEffect(() => {
@@ -31,8 +33,10 @@ export function Playlist(props) {
 
     async function addNewFile(event) {
         var files = event.target.files;
+        setShowProgress(true);
         loadFileToPlaylist(files).then(() => {
             event.target.value = '';
+            setShowProgress(false);
         });
     }
 
@@ -83,6 +87,7 @@ export function Playlist(props) {
     }
 
     return (<Fragment>
+        <ProgressBar show={showProgress}/>
         <div className="buttons d-flex justify-content-center">
             <div className="list-button">
                 <input id="addNewFile"

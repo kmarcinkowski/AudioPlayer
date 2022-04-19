@@ -1,0 +1,20 @@
+$bar_width: 30%;
+
+.progress-container {
+    left: calc((100% - $bar_width) / 2 );
+    position: relative;
+    top: 50%;
+    width: $bar_width;
+    z-index: 20;
+}
+
+.overlay {
+    background-color: lightyellow;
+    height: 100%;
+    left:0;
+    opacity: 0.9;
+    position: fixed;
+    top:0;
+    width: 100%;
+    z-index:19;
+}
