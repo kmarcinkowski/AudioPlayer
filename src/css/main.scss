@@ -1,0 +1,196 @@
+body {
+    background-color: lightgreen;
+
+    /* Smoothly transition the background color */
+    //transition: background-color .5s;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    .details {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 25px;
+        text-align: center;
+        width: 100%;
+        
+        .track-art {
+            object-fit: cover;
+            margin: 25px;
+            height: 250px;
+            width: 250px;
+            border-radius: 15%;
+        }
+        /* Changing the font sizes to suitable ones */
+        .now-playing {
+            font-size: 1rem;
+        }
+        
+        .track-name {
+            font-size: 3rem;
+            // width: 100%;
+        }
+        
+        .track-artist {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Define the slider width so that it scales properly */
+    .slider_container {
+        width: 75%;
+        max-width: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .slider {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: black;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 15px;
+                height: 15px;
+                background: white;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+            
+            &:hover {
+                opacity: 1.0;
+            }
+            
+            &:focus {
+                outline: none;
+            }
+
+            &.seek_slider {
+                width: 60%;
+            }
+            
+            &.volume_slider {
+                width: 30%;
+
+            }
+        }
+        i {
+            &.fa-volume-down,
+            &.fa-volume-up {
+                padding: 10px;
+            }
+        }
+
+        .time {
+            padding: 10px;
+        }
+    }
+}
+
+/* Using flex with the row direction to 
+align items in a horizontal direction */
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .list-button {
+        padding: 15px 25px;
+    }
+}
+.list-button,
+.player-button,
+.inputfile + label {
+    padding: 25px;
+    opacity: 0.8;
+    cursor: pointer;
+    
+    /* Smoothly transition the opacity */
+    transition: opacity .2s;
+    &:hover {
+        opacity: 1.0;
+    }
+}
+
+.inputfile {
+    z-index: -1;
+
+    +label {
+        margin-bottom: 0px;
+        padding: 0px;
+    }
+}
+
+.playlist {
+    display: block;
+    padding: 15px;
+    overflow-x: overlay;
+    height: 85vh;
+    
+    .playlist-item {
+        border: solid 1px black;
+        border-bottom: none;
+        display: block;
+        min-height: 80px;
+        padding: 10px;
+        //margin-bottom: -1px;
+        
+        &:last-child {
+            border-bottom: solid 1px black;
+        }
+        
+        &.active {
+            background-color: honeydew;
+            opacity: 0.7;
+        }
+        
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .playlist-item-image {
+            padding-left: 0;
+            padding-right: 0;
+
+            img {
+               max-width: 80px;    
+               border-radius: 15%;
+            }
+        }
+        .playlist-item-button {
+            padding-right: 0;
+            text-align: center;
+            
+            button{
+                background: transparent;
+                padding: 0;
+                border: none;
+                cursor: pointer;
+                outline: none;
+            }
+            :first-child{
+                margin-bottom: 8px;
+            }
+        }
+    }
+}
+
+.text-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

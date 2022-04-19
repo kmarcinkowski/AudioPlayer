@@ -1,6 +1,5 @@
-import React, { memo, Fragment, useState, useEffect, useCallback } from 'react';
+import React, { memo, Fragment, useState, useEffect } from 'react';
 import defaultImage from "./defaultImage.jpg";
-import "./css/all.min.css";
 
 export function Playlist(props) {
     const {onRemove, onLoad} = props;
@@ -85,16 +84,16 @@ export function Playlist(props) {
 
     return (<Fragment>
         <div className="buttons d-flex justify-content-center">
-            <div className="clear">
+            <div className="list-button">
                 <input id="addNewFile"
                     type="file"
                     accept="audio/*"
-                    className="inputfile"
+                    className="inputfile d-none"
                     multiple
                     onChange={addNewFile}></input>
                 <label htmlFor="addNewFile" ><i className="fas fa-plus-square fa-4x"></i></label>
             </div>
-            <div className="clear" onClick={clearPlaylist} style={{ cursor: 'pointer' }}>
+            <div className="list-button" onClick={clearPlaylist}>
                 <i className="far fa-trash-alt fa-4x"></i>
             </div>
         </div>
@@ -118,12 +117,12 @@ function buildTrackItem(track, index, activeIndex) {
                 <img src={track.image} alt={track.name} />
             </div>
             <div className="col-7 playlist-item-details">
-                <h4>{track.name}</h4>
-                <h5>{track.artist}</h5>
+                <h4 className="text-wrap">{track.name}</h4>
+                <h5 className="text-wrap">{track.artist}</h5>
             </div>
             <div className="col-2 playlist-item-button d-flex flex-column">
-                <button className="track-button far fa-play-circle fa-2x" aria-label="play" value={index}></button>
-                <button className="track-button far fa-trash-alt fa-2x" aria-label="delete" value={index}></button>
+                <button className="player-button far fa-play-circle fa-2x" aria-label="play" value={index}></button>
+                <button className="player-button far fa-trash-alt fa-2x" aria-label="delete" value={index}></button>
             </div>
         </div>
     </li>);

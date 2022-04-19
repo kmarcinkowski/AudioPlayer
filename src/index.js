@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import PlayerContainer from "./PlayerContainer";
 import './css/bootstrap.min.css';
-import "./css/main.css";
+import "./css/main.scss";
+import "./css/all.min.css";
 //import reportWebVitals from './reportWebVitals';
 
 const root = document.getElementById('root');

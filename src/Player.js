@@ -168,37 +168,37 @@ function Player({ track, ...other }) {
 		<div className="details">
 			<div className="now-playing">{`PLAYING ${trackIndex + 1} OF ${trackCount}`}</div>
 			<img src={currentTrack.image} className="track-art" alt="Track art"></img>
-			<div className="track-name" title={currentTrack.name}>{currentTrack.name}</div>
+			<div className="track-name text-wrap" title={currentTrack.name}>{currentTrack.name}</div>
 			<div className="track-artist">{currentTrack.artist}</div>
 		</div>
 
 		{/* Define the section for displaying track buttons */}
 		<div className="buttons">
-			<div className="prev-track" onClick={onPreviousTrackHandle}>
+			<div className="player-button" onClick={onPreviousTrackHandle}>
 				<i className="fa fa-step-backward fa-2x"></i>
 			</div>
-			<div className="playpause-track" onClick={playpauseTrack}>
+			<div className="player-button" onClick={playpauseTrack}>
 				<i className={`fa fa-5x ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`}></i>
 			</div>
-			<div className="next-track" onClick={onNextTrackHandle}>
+			<div className="player-button" onClick={onNextTrackHandle}>
 				<i className="fa fa-step-forward fa-2x"></i>
 			</div>
-			<div className="stop-track" onClick={onStopTrack}>
+			<div className="player-button" onClick={onStopTrack}>
 				<i className="fa fa-stop-circle fa-2x"></i>
 			</div>
 		</div>
 
 		{/* Define the section for displaying the seek slider*/}
 		<div className="slider_container">
-			<div className="current-time">{currentTime}</div>
-			<input id="seekSlider" ref={seekSlider} type="range" min="1" max="100" defaultValue="1" className="seek_slider" onChange={seektTo}></input>
-			<div className="total-duration">{trackDuration}</div>
+			<div className="time">{currentTime}</div>
+			<input id="seekSlider" ref={seekSlider} type="range" min="1" max="100" defaultValue="1" className="slider seek_slider" onChange={seektTo}></input>
+			<div className="time">{trackDuration}</div>
 		</div>
 
 		{/* Define the section for displaying the volume slider*/}
 		<div className="slider_container">
 			<i className="fa fa-volume-down"></i>
-			<input ref={volumeSlider} type="range" min="1" max="100" defaultValue="100" className="volume_slider" onChange={onVolumeChange}></input>
+			<input ref={volumeSlider} type="range" min="1" max="100" defaultValue="100" className="slider volume_slider" onChange={onVolumeChange}></input>
 			<i className="fa fa-volume-up"></i>
 		</div>
 	</Fragment>);
