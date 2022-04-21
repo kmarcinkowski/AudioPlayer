@@ -77,22 +77,25 @@ class PlayerContainer extends React.Component {
     }
 
     render() {
-        return (<div className="col row">
-            <div className="player col-xl-8 col-lg-6 col-md-12">
-                <Player
-                    track={this.state.currentTrack}
-                    trackCount={this.state.trackCount}
-                    trackIndex={this.state.currentTrackIndex} 
-                    onPreviousTrack={this.previousTrackHandler}
-                    onNextTrack={this.nextTrackHandler}
-                    setPlay={param => this.setPlay = param}/>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-md-12" style={{ paddingRight: "0px" }}>
-                <Playlist
-                    trackIndex={this.state.currentTrackIndex}
-                    onLoad={this.playlistLoadHandler}
-                    onPlay={this.playTrackHandler}
-                    onRemove={this.stopTrackHandler} />
+        return (
+        <div className="container-fluid">
+            <div className="row">
+                <div className="player col-xl-8 col-lg-6 col-md-12">
+                    <Player
+                        track={this.state.currentTrack}
+                        trackCount={this.state.trackCount}
+                        trackIndex={this.state.currentTrackIndex} 
+                        onPreviousTrack={this.previousTrackHandler}
+                        onNextTrack={this.nextTrackHandler}
+                        setPlay={param => this.setPlay = param}/>
+                </div>
+                <div className="col-xl-4 col-lg-6 col-md-12" style={{ paddingRight: "0px" }}>
+                    <Playlist
+                        trackIndex={this.state.currentTrackIndex}
+                        onLoad={this.playlistLoadHandler}
+                        onPlay={this.playTrackHandler}
+                        onRemove={this.stopTrackHandler} />
+                </div>
             </div>
         </div>
         )
