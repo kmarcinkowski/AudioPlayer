@@ -1,6 +1,8 @@
 import React, { memo, Fragment, useState, useEffect } from 'react';
 import defaultImage from "./defaultImage.jpg";
 import ProgressBar from './ProgressBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlayCircle, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 export function Playlist(props) {
     const {onRemove, onLoad} = props;
@@ -96,10 +98,12 @@ export function Playlist(props) {
                     className="inputfile d-none"
                     multiple
                     onChange={addNewFile}></input>
-                <label htmlFor="addNewFile" ><i className="fas fa-plus-square fa-4x"></i></label>
+                <label htmlFor="addNewFile" >
+                    <FontAwesomeIcon size='4x' icon={faPlusSquare}  />
+                </label>
             </div>
             <div className="list-button" onClick={clearPlaylist}>
-                <i className="far fa-trash-alt fa-4x"></i>
+                <FontAwesomeIcon size='4x' icon={faTrashAlt}  />
             </div>
         </div>
         <ul id="music-list" className="playlist container" onClickCapture={playListItem}>
@@ -126,8 +130,12 @@ function buildTrackItem(track, index, activeIndex) {
                 <h5 className="text-wrap">{track.artist}</h5>
             </div>
             <div className="col-2 playlist-item-button d-flex flex-column">
-                <button className="player-button far fa-play-circle fa-2x" aria-label="play" value={index}></button>
-                <button className="player-button far fa-trash-alt fa-2x" aria-label="delete" value={index}></button>
+                <button className="player-button" aria-label="play" value={index}>
+                    <FontAwesomeIcon size='2x' icon={faPlayCircle}  />
+                </button>
+                <button className="player-button" aria-label="delete" value={index}>
+                    <FontAwesomeIcon size='2x' icon={faTrashAlt}  />
+                </button>
             </div>
         </div>
     </li>);

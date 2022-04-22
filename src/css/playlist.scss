@@ -47,7 +47,7 @@
                 cursor: pointer;
                 outline: none;
             }
-            :first-child{
+            >:first-child{
                 margin-bottom: 8px;
             }
         }

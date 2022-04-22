@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import defaultPicture from "./defaultImage.jpg"
-import MediaSession, {useMediaMeta} from "./MediaSession";  
+import MediaSession, {useMediaMeta} from "./MediaSession";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPauseCircle, faPlayCircle, faStepBackward, faStepForward, faStopCircle, faVolumeDown, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
 export const TRACK_DEFAULT = {
 	name: "Track Name",
@@ -175,16 +177,20 @@ function Player({ track, ...other }) {
 		{/* Define the section for displaying track buttons */}
 		<div className="buttons">
 			<div className="player-button" onClick={onPreviousTrackHandle}>
-				<i className="fa fa-step-backward fa-2x"></i>
+				{/* <i className="fa fa-step-backward fa-2x"></i> */}
+				<FontAwesomeIcon size="2x" icon={faStepBackward}/>
 			</div>
 			<div className="player-button" onClick={playpauseTrack}>
-				<i className={`fa fa-5x ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`}></i>
+				{/* <i className={`fa fa-5x ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`}></i> */}
+				<FontAwesomeIcon size="5x" icon={isPlaying ? faPauseCircle : faPlayCircle}/>
 			</div>
 			<div className="player-button" onClick={onNextTrackHandle}>
-				<i className="fa fa-step-forward fa-2x"></i>
+				{/* <i className="fa fa-step-forward fa-2x"></i> */}
+				<FontAwesomeIcon size="2x" icon={faStepForward}/>
 			</div>
 			<div className="player-button" onClick={onStopTrack}>
-				<i className="fa fa-stop-circle fa-2x"></i>
+				{/* <i className="fa fa-stop-circle fa-2x"></i> */}
+				<FontAwesomeIcon size="2x" icon={faStopCircle}/>
 			</div>
 		</div>
 
@@ -197,9 +203,11 @@ function Player({ track, ...other }) {
 
 		{/* Define the section for displaying the volume slider*/}
 		<div className="slider_container">
-			<i className="fa fa-volume-down"></i>
+			{/* <i className="fa fa-volume-down"></i> */}
+			<FontAwesomeIcon icon={faVolumeDown}/>
 			<input ref={volumeSlider} type="range" min="1" max="100" defaultValue="100" className="slider volume_slider" onChange={onVolumeChange}></input>
-			<i className="fa fa-volume-up"></i>
+			{/* <i className="fa fa-volume-up"></i> */}
+			<FontAwesomeIcon icon={faVolumeUp}/>
 		</div>
 	</Fragment>);
 }

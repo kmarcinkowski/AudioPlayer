@@ -42,5 +42,5 @@ align items in a horizontal direction */
 .text-wrap {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: nowrap !important;
 }

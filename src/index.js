@@ -4,7 +4,6 @@ import './index.css';
 import PlayerContainer from "./PlayerContainer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./css/styles.scss";
-import "./css/all.min.css";
 //import reportWebVitals from './reportWebVitals';
 
 const root = document.getElementById('root');
