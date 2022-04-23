@@ -121,7 +121,7 @@ function buildTrackItem(track, index, activeIndex) {
     return (<li className={`playlist-item ${activeIndex === index ? " active" : ""}`}
         key={index}
         value={index}>
-        <div className="row">
+        <div className="row align-items-center">
             <div className="col-3 playlist-item-image">
                 <img src={track.image} alt={track.name} />
             </div>
