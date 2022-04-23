@@ -43,15 +43,15 @@ export default function MediaSession(handlers) {
         };
     },[isMediaSessionAvailable, mediaSession]);
 
-    useEffect(() => bindActionHandler('play', onPlay), [onPlay]);
-    useEffect(() => bindActionHandler('pause', onPause), [onPause]);
-    useEffect(() => bindActionHandler('nexttrack', onNextTrack), [onNextTrack]);
-    useEffect(() => bindActionHandler('previoustrack', onPreviousTrack), [onPreviousTrack,]);
-    useEffect(() => bindActionHandler('seekbackward', onSeekBackward), [onSeekBackward,]);
-    useEffect(() => bindActionHandler('seekforward', onSeekForward), [onSeekForward,]);
-    useEffect(() => bindActionHandler('seekto', onSeekTo), [onSeekTo]);
-    useEffect(() => bindActionHandler('skipad', onSkipAd), [onSkipAd]);
-    useEffect(() => bindActionHandler('stop', onStop), [onStop]);
+    useEffect(() => bindActionHandler('play', onPlay), [onPlay, bindActionHandler]);
+    useEffect(() => bindActionHandler('pause', onPause), [onPause, bindActionHandler]);
+    useEffect(() => bindActionHandler('nexttrack', onNextTrack), [onNextTrack, bindActionHandler]);
+    useEffect(() => bindActionHandler('previoustrack', onPreviousTrack), [onPreviousTrack,bindActionHandler]);
+    useEffect(() => bindActionHandler('seekbackward', onSeekBackward), [onSeekBackward,bindActionHandler]);
+    useEffect(() => bindActionHandler('seekforward', onSeekForward), [onSeekForward,bindActionHandler]);
+    useEffect(() => bindActionHandler('seekto', onSeekTo), [onSeekTo,bindActionHandler]);
+    useEffect(() => bindActionHandler('skipad', onSkipAd), [onSkipAd, bindActionHandler]);
+    useEffect(() => bindActionHandler('stop', onStop), [onStop, bindActionHandler]);
 
     return;
 };

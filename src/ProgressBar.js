@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 var DEFAULT_WIDTH = "100%";
 
-export default function ProgressBar(props) {
+function ProgressBar(props) {
     const [style] = useState({ width: props.width || DEFAULT_WIDTH });
     const [showProgress, setShowProgress] = useState(false);
 
@@ -26,3 +26,4 @@ export default function ProgressBar(props) {
         </div>
     )
 }
+export default memo(ProgressBar);

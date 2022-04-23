@@ -68,12 +68,12 @@ export function Playlist(props) {
         setPlaylist([...playlist, ...playlistArray]);
     }
 
-    function playListItem(event) {
-        let index = parseInt(event.target.value);
-        if (event.target.ariaLabel === "play") {
+    function playListItem(index) {
+        // let index = parseInt(event.target.value);
+        // if (event.target.ariaLabel === "play") {
             setTrackIndex(index); //probably unnecessary since on parent rerender, current index will be given
             props.onPlay(index);
-        } else if (event.target.ariaLabel === "delete") deleteListItem(index);
+        // } else if (event.target.ariaLabel === "delete") deleteListItem(index);
     }
 
     function deleteListItem(index) {
@@ -106,18 +106,17 @@ export function Playlist(props) {
                 <FontAwesomeIcon size='4x' icon={faTrashAlt}  />
             </div>
         </div>
-        <ul id="music-list" className="playlist container" onClickCapture={playListItem}>
+        <ul id="music-list" className="playlist container" >
             {playlist.map((item, index) => {
-                return buildTrackItem(item, index, trackIndex);
+                return buildTrackItem(item, index, trackIndex, deleteListItem, playListItem);
             })}
         </ul>
     </Fragment>
     )
-
 }
 
 // todo: instead of event on ul, give event on each button; make into component and use memo for list rerender
-function buildTrackItem(track, index, activeIndex) {
+function buildTrackItem(track, index, activeIndex, deleteHandle, playHandle) {
     return (<li className={`playlist-item ${activeIndex === index ? " active" : ""}`}
         key={index}
         value={index}>
@@ -130,10 +129,10 @@ function buildTrackItem(track, index, activeIndex) {
                 <h5 className="text-wrap">{track.artist}</h5>
             </div>
             <div className="col-2 playlist-item-button d-flex flex-column">
-                <button className="player-button" aria-label="play" value={index}>
+                <button className="player-button" aria-label="play" value={index} onClick={()=>playHandle(index)}>
                     <FontAwesomeIcon size='2x' icon={faPlayCircle}  />
                 </button>
-                <button className="player-button" aria-label="delete" value={index}>
+                <button className="player-button" aria-label="delete" value={index} onClick={()=>deleteHandle(index)}>
                     <FontAwesomeIcon size='2x' icon={faTrashAlt}  />
                 </button>
             </div>
