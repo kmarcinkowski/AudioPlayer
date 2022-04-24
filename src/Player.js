@@ -12,10 +12,10 @@ export const TRACK_DEFAULT = {
 }
 
 const DEFAULT_TIME = "00:00";
-// TODO add mediasession (either mine or from npm); add loop, repeat options	
+// TODO add loop, repeat options	
 function Player({ track, ...other }) {
 
-	let intervalID = useRef(null); //to state
+	let intervalID = useRef(null);
 	let volumeSlider = useRef();
 	let seekSlider = useRef();
 	const {onNextTrack, onPreviousTrack} = other;
@@ -114,7 +114,6 @@ function Player({ track, ...other }) {
 	const seektTo = () => {
 	
     	let seekto = audioPlayer.current.duration * (seekSlider.current.value / 100);
-    	// Set the current track position to the calculated seek position 
     	audioPlayer.current.currentTime = seekto;
 		if (!isPlaying) {
 			let currentTimeString = timeToString(seekto);
@@ -141,7 +140,6 @@ function Player({ track, ...other }) {
 	const setTrackDuration = () => {
 		let seekPosition = 0;
 
-		// Check if the current track duration is a legible number 
 		if (!isNaN(audioPlayer.current.duration)) {
 			let duration = audioPlayer.current.duration;
 			let currentTime = audioPlayer.current.currentTime;
@@ -177,19 +175,15 @@ function Player({ track, ...other }) {
 		{/* Define the section for displaying track buttons */}
 		<div className="buttons">
 			<div className="player-button" onClick={onPreviousTrackHandle}>
-				{/* <i className="fa fa-step-backward fa-2x"></i> */}
 				<FontAwesomeIcon size="2x" icon={faStepBackward}/>
 			</div>
 			<div className="player-button" onClick={playpauseTrack}>
-				{/* <i className={`fa fa-5x ${isPlaying ? "fa-pause-circle" : "fa-play-circle"}`}></i> */}
 				<FontAwesomeIcon size="5x" icon={isPlaying ? faPauseCircle : faPlayCircle}/>
 			</div>
 			<div className="player-button" onClick={onNextTrackHandle}>
-				{/* <i className="fa fa-step-forward fa-2x"></i> */}
 				<FontAwesomeIcon size="2x" icon={faStepForward}/>
 			</div>
 			<div className="player-button" onClick={onStopTrack}>
-				{/* <i className="fa fa-stop-circle fa-2x"></i> */}
 				<FontAwesomeIcon size="2x" icon={faStopCircle}/>
 			</div>
 		</div>
@@ -203,10 +197,8 @@ function Player({ track, ...other }) {
 
 		{/* Define the section for displaying the volume slider*/}
 		<div className="slider_container">
-			{/* <i className="fa fa-volume-down"></i> */}
 			<FontAwesomeIcon icon={faVolumeDown}/>
 			<input ref={volumeSlider} type="range" min="1" max="100" defaultValue="100" className="slider volume_slider" onChange={onVolumeChange}></input>
-			{/* <i className="fa fa-volume-up"></i> */}
 			<FontAwesomeIcon icon={faVolumeUp}/>
 		</div>
 	</Fragment>);

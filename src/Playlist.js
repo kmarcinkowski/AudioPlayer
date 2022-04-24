@@ -69,11 +69,8 @@ export function Playlist(props) {
     }
 
     function playListItem(index) {
-        // let index = parseInt(event.target.value);
-        // if (event.target.ariaLabel === "play") {
             setTrackIndex(index); //probably unnecessary since on parent rerender, current index will be given
             props.onPlay(index);
-        // } else if (event.target.ariaLabel === "delete") deleteListItem(index);
     }
 
     function deleteListItem(index) {
@@ -115,7 +112,6 @@ export function Playlist(props) {
     )
 }
 
-// todo: instead of event on ul, give event on each button; make into component and use memo for list rerender
 function buildTrackItem(track, index, activeIndex, deleteHandle, playHandle) {
     return (<li className={`playlist-item ${activeIndex === index ? " active" : ""}`}
         key={index}
