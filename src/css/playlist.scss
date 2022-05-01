@@ -4,24 +4,23 @@
     margin-bottom: 0;
     overflow-x: overlay;
     height: 85vh;
-    
+
     .playlist-item {
         border: solid 1px black;
         border-bottom: none;
         display: block;
         min-height: 80px;
         padding: 10px;
-        //margin-bottom: -1px;
-        
+
         &:last-child {
             border-bottom: solid 1px black;
         }
-        
+
         &.active {
             background-color: honeydew;
             opacity: 0.7;
         }
-        
+
         .row {
             margin-left: 0;
             margin-right: 0;
@@ -32,22 +31,25 @@
             padding-right: 0;
 
             img {
-               max-width: 80px;    
-               border-radius: 15%;
+                max-height: 80px;
+                max-width: 80px;
+                border-radius: 15%;
             }
         }
+
         .playlist-item-button {
             padding-right: 0;
             text-align: center;
-            
-            button{
+
+            button {
                 background: transparent;
                 padding: 0;
                 border: none;
                 cursor: pointer;
                 outline: none;
             }
-            >:first-child{
+
+            >:first-child {
                 margin-bottom: 8px;
             }
         }
