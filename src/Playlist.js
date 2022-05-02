@@ -7,6 +7,7 @@ import { faPlayCircle, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-
 export function Playlist(props) {
     const {onRemove, onLoad} = props;
     const [playlist, setPlaylist] = useState([]);
+    const [reader] = useState(new FileReader());
     const [mutag] = useState(window.mutag);
     const [showProgress, setShowProgress] = useState(false);
     let [trackIndex, setTrackIndex] = useState(-1);
@@ -42,16 +43,27 @@ export function Playlist(props) {
         });
     }
 
+    async function  blobToBase64(blob) {
+        return new Promise((resolve, _) => {
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      }
+
     // TODO rebuild to return list of promises and await for all of them
     async function loadFileToPlaylist(files) {
         let playlistArray = [];
         for (const file of files) {
-            await mutag.fetch(file).then(tags => {
+            const fileBase64 = await blobToBase64(file);
+            await mutag.fetch(file).then(async tags => {
+                let imageBase64;
+                if(tags.APIC) imageBase64 = await blobToBase64(tags.APIC); 
+                else imageBase64 =  defaultImage
                 let newTrack = {
                     name: tags.TIT2 ? tags.TIT2 : file.name,
                     artist: tags.TPE1,
-                    path: window.URL.createObjectURL(file),
-                    image: tags.APIC ? window.URL.createObjectURL(tags.APIC) : window.URL.createObjectURL({ defaultImage })
+                    path: fileBase64,
+                    image: imageBase64,
                 }
                 if (tags.TALB) newTrack.album = tags.TALB;
                 playlistArray.push(newTrack);
@@ -59,8 +71,8 @@ export function Playlist(props) {
                 alert(error);
                 let newTrack = {
                     name: file.name,
-                    path: window.URL.createObjectURL(file),
-                    image: window.URL.createObjectURL({ defaultImage })
+                    path: fileBase64,
+                    image: defaultImage
                 }
                 playlistArray.push(newTrack);
             })
