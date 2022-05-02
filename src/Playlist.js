@@ -1,27 +1,31 @@
-import React, { memo, Fragment, useState, useEffect } from 'react';
+import React, { memo, Fragment, useState, useEffect } from "react";
 import defaultImage from "./defaultImage.jpg";
-import ProgressBar from './ProgressBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle, faPlusSquare, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import ProgressBar from "./ProgressBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faPlayCircle,
+    faPlusSquare,
+    faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export function Playlist(props) {
-    const {onRemove, onLoad} = props;
+    const { onRemove, onLoad } = props;
     const [playlist, setPlaylist] = useState([]);
-    const [reader] = useState(new FileReader());
+    // const [reader] = useState(new FileReader());
     const [mutag] = useState(window.mutag);
     const [showProgress, setShowProgress] = useState(false);
     let [trackIndex, setTrackIndex] = useState(-1);
-  
+
     useEffect(() => {
         setTrackIndex(props.trackIndex);
     }, [props.trackIndex]);
 
-    useEffect(()=>{
+    useEffect(() => {
         onLoad(playlist);
     }, [playlist, onLoad]);
 
-    const clearPlaylist = () =>{
-        playlist.forEach(track => {
+    const clearPlaylist = () => {
+        playlist.forEach((track) => {
             URL.revokeObjectURL(track.path);
             URL.revokeObjectURL(track.image);
         });
@@ -38,51 +42,61 @@ export function Playlist(props) {
         var files = event.target.files;
         setShowProgress(true);
         loadFileToPlaylist(files).then(() => {
-            event.target.value = '';
+            event.target.value = "";
             setShowProgress(false);
         });
     }
 
-    async function  blobToBase64(blob) {
+    async function blobToBase64(blob) {
+        const reader = new FileReader();
         return new Promise((resolve, _) => {
-          reader.onloadend = () => resolve(reader.result);
-          reader.readAsDataURL(blob);
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
         });
-      }
+    }
 
     // TODO rebuild to return list of promises and await for all of them
     async function loadFileToPlaylist(files) {
-        let playlistArray = [];
+        let promiseArray = [];
         for (const file of files) {
             const fileBase64 = await blobToBase64(file);
-            await mutag.fetch(file).then(async tags => {
-                let imageBase64;
-                if(tags.APIC) imageBase64 = await blobToBase64(tags.APIC); 
-                else imageBase64 =  defaultImage
-                let newTrack = {
-                    name: tags.TIT2 ? tags.TIT2 : file.name,
-                    artist: tags.TPE1,
-                    path: fileBase64,
-                    image: imageBase64,
-                }
-                if (tags.TALB) newTrack.album = tags.TALB;
-                playlistArray.push(newTrack);
-            }).catch(error => {
-                alert(error);
-                let newTrack = {
-                    name: file.name,
-                    path: fileBase64,
-                    image: defaultImage
-                }
-                playlistArray.push(newTrack);
-            })
+            promiseArray.push(
+                new Promise((resolve) => {
+                    mutag.fetch(file)
+                        .then(async (tags) => {
+                            let imageBase64;
+                            if (tags.APIC)
+                                imageBase64 = await blobToBase64(tags.APIC);
+                            else imageBase64 = defaultImage;
+                            let newTrack = {
+                                name: tags.TIT2 ? tags.TIT2 : file.name,
+                                artist: tags.TPE1,
+                                path: fileBase64,
+                                image: imageBase64,
+                            };
+                            if (tags.TALB) newTrack.album = tags.TALB;
+                            resolve(newTrack);
+                        })
+                        .catch((error) => {
+                            alert(error);
+                            let newTrack = {
+                                name: file.name,
+                                path: fileBase64,
+                                image: defaultImage,
+                            };
+                            resolve(newTrack);
+                        });
+                })
+            );
         }
-        setPlaylist([...playlist, ...playlistArray]);
+        Promise.all(promiseArray).then((tracks) => {
+            setPlaylist([...playlist, ...tracks]);
+        });
     }
 
     function playListItem(index) {
-            setTrackIndex(index); //probably unnecessary since on parent rerender, current index will be given
-            props.onPlay(index);
+        setTrackIndex(index); //probably unnecessary since on parent rerender, current index will be given
+        props.onPlay(index);
     }
 
     function deleteListItem(index) {
@@ -97,55 +111,80 @@ export function Playlist(props) {
         setPlaylist(newPlaylist);
     }
 
-    return (<Fragment>
-        <ProgressBar show={showProgress}/>
-        <div className="buttons d-flex justify-content-center">
-            <div className="list-button">
-                <input id="addNewFile"
-                    type="file"
-                    accept="audio/*"
-                    className="inputfile d-none"
-                    multiple
-                    onChange={addNewFile}></input>
-                <label htmlFor="addNewFile" >
-                    <FontAwesomeIcon size='4x' icon={faPlusSquare}  />
-                </label>
+    return (
+        <Fragment>
+            <ProgressBar show={showProgress} />
+            <div className="buttons d-flex justify-content-center">
+                <div className="list-button">
+                    <input
+                        id="addNewFile"
+                        type="file"
+                        accept="audio/*"
+                        className="inputfile d-none"
+                        multiple
+                        onChange={addNewFile}
+                    ></input>
+                    <label htmlFor="addNewFile">
+                        <FontAwesomeIcon size="4x" icon={faPlusSquare} />
+                    </label>
+                </div>
+                <div className="list-button" onClick={clearPlaylist}>
+                    <FontAwesomeIcon size="4x" icon={faTrashAlt} />
+                </div>
             </div>
-            <div className="list-button" onClick={clearPlaylist}>
-                <FontAwesomeIcon size='4x' icon={faTrashAlt}  />
-            </div>
-        </div>
-        <ul id="music-list" className="playlist container" >
-            {playlist.map((item, index) => {
-                return buildTrackItem(item, index, trackIndex, deleteListItem, playListItem);
-            })}
-        </ul>
-    </Fragment>
-    )
+            <ul id="music-list" className="playlist container">
+                {playlist.map((item, index) => {
+                    return buildTrackItem(
+                        item,
+                        index,
+                        trackIndex,
+                        deleteListItem,
+                        playListItem
+                    );
+                })}
+            </ul>
+        </Fragment>
+    );
 }
 
 function buildTrackItem(track, index, activeIndex, deleteHandle, playHandle) {
-    return (<li className={`playlist-item ${activeIndex === index ? " active" : ""}`}
-        key={index}
-        value={index}>
-        <div className="row align-items-center">
-            <div className="col-3 playlist-item-image">
-                <img src={track.image} alt={track.name} />
+    return (
+        <li
+            className={`playlist-item ${
+                activeIndex === index ? " active" : ""
+            }`}
+            key={index}
+            value={index}
+        >
+            <div className="row align-items-center">
+                <div className="col-3 playlist-item-image">
+                    <img src={track.image} alt={track.name} />
+                </div>
+                <div className="col-7 playlist-item-details">
+                    <h4 className="text-wrap">{track.name}</h4>
+                    <h5 className="text-wrap">{track.artist}</h5>
+                </div>
+                <div className="col-2 playlist-item-button d-flex flex-column">
+                    <button
+                        className="player-button"
+                        aria-label="play"
+                        value={index}
+                        onClick={() => playHandle(index)}
+                    >
+                        <FontAwesomeIcon size="2x" icon={faPlayCircle} />
+                    </button>
+                    <button
+                        className="player-button"
+                        aria-label="delete"
+                        value={index}
+                        onClick={() => deleteHandle(index)}
+                    >
+                        <FontAwesomeIcon size="2x" icon={faTrashAlt} />
+                    </button>
+                </div>
             </div>
-            <div className="col-7 playlist-item-details">
-                <h4 className="text-wrap">{track.name}</h4>
-                <h5 className="text-wrap">{track.artist}</h5>
-            </div>
-            <div className="col-2 playlist-item-button d-flex flex-column">
-                <button className="player-button" aria-label="play" value={index} onClick={()=>playHandle(index)}>
-                    <FontAwesomeIcon size='2x' icon={faPlayCircle}  />
-                </button>
-                <button className="player-button" aria-label="delete" value={index} onClick={()=>deleteHandle(index)}>
-                    <FontAwesomeIcon size='2x' icon={faTrashAlt}  />
-                </button>
-            </div>
-        </div>
-    </li>);
+        </li>
+    );
 }
 
 export default memo(Playlist);
