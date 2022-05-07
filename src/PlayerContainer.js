@@ -1,6 +1,7 @@
 import React from "react";
 import Player, { TRACK_DEFAULT } from "./Player";
 import Playlist from "./Playlist";
+import SettingsModal from "./Settings";
 
 class PlayerContainer extends React.Component {
 
@@ -80,6 +81,7 @@ class PlayerContainer extends React.Component {
         return (
         <div className="container-fluid">
             <div className="row">
+                <SettingsModal/>
                 <div className="player col-xl-8 col-lg-6 col-md-12">
                     <Player
                         track={this.state.currentTrack}
