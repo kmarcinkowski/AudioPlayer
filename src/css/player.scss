@@ -8,13 +8,13 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
-        margin-top: 25px;
+        margin-top: $spacing-large;
         text-align: center;
         width: 100%;
-        
+
         .track-art {
             object-fit: cover;
-            margin: 25px;
+            margin: $spacing-large;
             height: 250px;
             width: 250px;
             border-radius: 15%;
@@ -23,12 +23,12 @@
         .now-playing {
             font-size: 1rem;
         }
-        
+
         .track-name {
             font-size: 3rem;
             // width: 100%;
         }
-        
+
         .track-artist {
             font-size: 1.5rem;
         }
@@ -41,7 +41,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
         .slider {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -49,24 +49,24 @@
             height: 5px;
             background: black;
             opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        
+            -webkit-transition: 0.2s;
+            transition: opacity 0.2s;
+
             &::-webkit-slider-thumb {
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
-                width: 15px;
-                height: 15px;
+                width: $spacing-medium;
+                height: $spacing-medium;
                 background: white;
                 cursor: pointer;
                 border-radius: 50%;
             }
-            
+
             &:hover {
-                opacity: 1.0;
+                opacity: 1;
             }
-            
+
             &:focus {
                 outline: none;
             }
@@ -74,21 +74,20 @@
             &.seek_slider {
                 width: 60%;
             }
-            
+
             &.volume_slider {
                 width: 30%;
-
             }
         }
         svg {
             &.fa-volume-down,
             &.fa-volume-up {
-                padding: 10px;
+                padding: $spacing;
             }
         }
 
         .time {
-            padding: 10px;
+            padding: $spacing;
         }
     }
 }

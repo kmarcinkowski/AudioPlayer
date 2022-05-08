@@ -1,0 +1,13 @@
+$font-color-primary: #212529;
+$bg-color-primary: #90ee90;
+
+:export {
+    fontColorPrimary: $font-color-primary;
+    bgColorPrimary: $bg-color-primary;
+}
+
+// Spacings
+$spacing-none: 0px;
+$spacing: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;

@@ -1,10 +1,3 @@
-body {
-    background-color: lightgreen;
-
-    /* Smoothly transition the background color */
-    //transition: background-color .5s;
-}
-
 /* Using flex with the row direction to 
 align items in a horizontal direction */
 .buttons {
@@ -22,18 +15,18 @@ align items in a horizontal direction */
     padding: 25px;
     opacity: 0.8;
     cursor: pointer;
-    
+
     /* Smoothly transition the opacity */
-    transition: opacity .2s;
+    transition: opacity 0.2s;
     &:hover {
-        opacity: 1.0;
+        opacity: 1;
     }
 }
 
 .inputfile {
     z-index: -1;
 
-    +label {
+    + label {
         margin-bottom: 0px;
         padding: 0px;
     }
@@ -43,4 +36,8 @@ align items in a horizontal direction */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap !important;
+}
+
+.spacing-outer-bottom {
+    margin-bottom: $spacing;
 }

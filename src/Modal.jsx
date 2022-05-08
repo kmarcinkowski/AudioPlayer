@@ -4,13 +4,13 @@ export default function Modal(props) {
         show && (
             <>
                 <div
-                    className="modal show d-block"
-                    tabindex="-1"
+                    className={`modal show d-block ${props.className}`}
+                    tabIndex="-1"
                     role="dialog"
                     data-bs-backdrop="static"
                     aria-modal={true}
                 >
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-scrollable">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{title}</h5>
