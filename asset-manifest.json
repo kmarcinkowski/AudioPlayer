@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/AudioPlayer/static/css/main.85cc3ad2.css",
-    "main.js": "/AudioPlayer/static/js/main.229bd726.js",
+    "main.css": "/AudioPlayer/static/css/main.24f83409.css",
+    "main.js": "/AudioPlayer/static/js/main.da10ddd6.js",
     "static/media/defaultImage.jpg": "/AudioPlayer/static/media/defaultImage.9238aed0b4093a1eeae1.jpg",
     "index.html": "/AudioPlayer/index.html"
   },
   "entrypoints": [
-    "static/css/main.85cc3ad2.css",
-    "static/js/main.229bd726.js"
+    "static/css/main.24f83409.css",
+    "static/js/main.da10ddd6.js"
   ]
 }
