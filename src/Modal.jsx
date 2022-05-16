@@ -26,13 +26,15 @@ export default function Modal(props) {
                             </div>
                             <div className="modal-body">{children}</div>
                             <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={onSave}
-                                >
-                                    Save
-                                </button>
+                                {onSave && (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={onSave}
+                                    >
+                                        Save
+                                    </button>
+                                )}
                                 <button
                                     type="button"
                                     className="btn btn-secondary"

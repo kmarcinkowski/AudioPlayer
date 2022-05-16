@@ -3,6 +3,7 @@ import defaultImage from "./defaultImage.jpg";
 import ProgressBar from "./ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { parseBlob } from "music-metadata-browser";
+import PlaylistStorage from "./PlaylistStorage";
 import {
     faPlayCircle,
     faPlusSquare,
@@ -56,7 +57,7 @@ export function Playlist(props) {
 
     function _arrayBufferToBase64(bytes) {
         if (!bytes) return null;
-        
+
         let binary = "";
         let len = bytes.byteLength;
         for (let i = 0; i < len; i++) {
@@ -68,35 +69,43 @@ export function Playlist(props) {
     async function loadFileToPlaylist(files) {
         let promiseArray = [];
         for (const file of files) {
-            const fileBase64 = await blobToBase64(file);
             promiseArray.push(
-                new Promise((resolve) => {
-                    parseBlob(file).then(meta => {
-                        let picture = meta.common.picture ? meta.common.picture[0] : null;
-                        let image;
-                        if (picture && picture.data){
-                            image = _arrayBufferToBase64(picture?.data);
-                            image = "data:" +meta.common.picture[0].format + ";base64," + image;
-                        }
-                        else image = defaultImage;
-                        let newTrack = {
-                            name: meta.common.title,
-                            artist: meta.common.artist ?? meta.common.albumartist,
-                            album: meta.common.album,
-                            path: fileBase64,
-                            image,
-                        }
-                        resolve(newTrack);
-                    })
-                    .catch((error) => {
-                        alert(error);
-                        let newTrack = {
-                            name: file.name,
-                            path: fileBase64,
-                            image: defaultImage,
-                        };
-                        resolve(newTrack);
-                    });
+                new Promise(async (resolve) => {
+                    const fileBase64 = await blobToBase64(file);
+                    parseBlob(file)
+                        .then((meta) => {
+                            let picture = meta.common.picture
+                                ? meta.common.picture[0]
+                                : null;
+                            let image;
+                            if (picture && picture.data) {
+                                image = _arrayBufferToBase64(picture?.data);
+                                image =
+                                    "data:" +
+                                    meta.common.picture[0].format +
+                                    ";base64," +
+                                    image;
+                            } else image = defaultImage;
+                            let newTrack = {
+                                name: meta.common.title,
+                                artist:
+                                    meta.common.artist ??
+                                    meta.common.albumartist,
+                                album: meta.common.album,
+                                path: fileBase64,
+                                image,
+                            };
+                            resolve(newTrack);
+                        })
+                        .catch((error) => {
+                            alert(error);
+                            let newTrack = {
+                                name: file.name,
+                                path: fileBase64,
+                                image: defaultImage,
+                            };
+                            resolve(newTrack);
+                        });
                 })
             );
         }
@@ -142,6 +151,13 @@ export function Playlist(props) {
                 <div className="list-button" onClick={clearPlaylist}>
                     <FontAwesomeIcon size="4x" icon={faTrashAlt} />
                 </div>
+                <PlaylistStorage
+                    playlist={playlist}
+                    onPlaylistLoad={(list) => {
+                        clearPlaylist();
+                        setPlaylist(list);
+                    }}
+                ></PlaylistStorage>
             </div>
             <ul id="music-list" className="playlist container">
                 {playlist.map((item, index) => {
