@@ -41,3 +41,7 @@ align items in a horizontal direction */
 .spacing-outer-bottom {
     margin-bottom: $spacing;
 }
+
+button {
+    color: inherit !important;
+}

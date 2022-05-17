@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { db } from "./DBController";
 import { useLiveQuery } from "dexie-react-hooks";
 import Modal from "./Modal";
@@ -9,7 +9,6 @@ import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 export default function PlaylistStorage(props) {
     const [show, setShow] = useState(false);
     const [add, setAdd] = useState(false);
-    // const getPlaylists =  useLiveQuery(() => db.playlists.toArray());
     const storage = useLiveQuery(() => db.playlists.toArray());
     const playlistName = useRef({ name: "" });
 
@@ -20,7 +19,10 @@ export default function PlaylistStorage(props) {
     }, []);
 
     const removePlaylist = (index) => {
-        db.playlists.delete(index);
+        let decision = window.confirm(
+            "Are you sure you want to remove this playlist?"
+        );
+        if (decision) db.playlists.delete(index);
     };
 
     const handleChange = (event) => {
@@ -38,40 +40,46 @@ export default function PlaylistStorage(props) {
     };
 
     return (
-        <Fragment>
-            <Dropdown label={<FontAwesomeIcon size="4x" icon={faEllipsisV} />}>
-                <li
-                    key="add"
-                    className="dropdown-item"
-                    onClick={() => setAdd(true)}
-                >
+        <div>
+            <Dropdown
+                className="list-button"
+                label={<FontAwesomeIcon size="4x" icon={faEllipsisV} />}
+            >
+                <li className="dropdown-item" onClick={() => setAdd(true)}>
                     Add new
                 </li>
-                <li
-                    key="manage"
-                    className="dropdown-item"
-                    onClick={() => setShow(true)}
-                >
+                <li className="dropdown-item" onClick={() => setShow(true)}>
                     Manage playlists
                 </li>
             </Dropdown>
-            <Modal show={show} title="Playlists" onClose={close}>
+            <Modal
+                show={show}
+                title="Playlists"
+                onClose={close}
+                closeLabel="Close"
+            >
                 <div className="form-group spacing-outer-bottom"></div>
                 <div>
                     {storage?.map((playlist) => (
-                        <div key={playlist.id}>
-                            <div>{playlist.name}</div>
-                            <button onClick={() => removePlaylist(playlist.id)}>
-                                Remove
-                            </button>
-                            <button
-                                onClick={() => {
-                                    props.onPlaylistLoad(playlist.tracks);
-                                    close();
-                                }}
-                            >
-                                Load
-                            </button>
+                        <div key={playlist.id} className="d-flex">
+                            <div className="me-auto">{playlist.name}</div>
+                            <div className="btn-group">
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => removePlaylist(playlist.id)}
+                                >
+                                    Remove
+                                </button>
+                                <button
+                                    className="btn btn-info"
+                                    onClick={() => {
+                                        props.onPlaylistLoad(playlist.tracks);
+                                        close();
+                                    }}
+                                >
+                                    Load
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -91,6 +99,6 @@ export default function PlaylistStorage(props) {
                     />
                 </div>
             </Modal>
-        </Fragment>
+        </div>
     );
 }

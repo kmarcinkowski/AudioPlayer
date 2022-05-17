@@ -1,16 +1,33 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Dropdown(props) {
     const [show, setShow] = useState(false);
+    const wrapper = useRef(null);
 
     const toggleDropdown = (event) => {
         setShow(!show);
     };
+
+    useEffect(() => {
+        /** Alert if clicked on outside of element*/
+        function handleClickOutside(event) {
+            if (wrapper.current && !wrapper.current.contains(event.target)) {
+                setShow(false);
+            }
+        }
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [wrapper]);
+    
     // TODO on click out hide
     return (
-        <div className="dropdown">
+        <div className={`dropdown ${props.className ?? ""}`} ref={wrapper}>
             <button
-                className="btn dropdown-toggle"
+                className="btn shadow-none"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"

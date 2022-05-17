@@ -1,4 +1,4 @@
-import React, { memo, Fragment, useState, useEffect } from "react";
+import React, { memo, Fragment, useState, useEffect, useCallback } from "react";
 import defaultImage from "./defaultImage.jpg";
 import ProgressBar from "./ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,19 +24,19 @@ export function Playlist(props) {
         onLoad(playlist);
     }, [playlist, onLoad]);
 
-    const clearPlaylist = () => {
+    const clearPlaylist = useCallback(() => {
         playlist.forEach((track) => {
             URL.revokeObjectURL(track.path);
             URL.revokeObjectURL(track.image);
         });
         onRemove();
         setPlaylist([]);
-    };
+    }, [onRemove, playlist]);
 
     /** Unmount - clear playlist and remove blobs */
-    useEffect(() => {
-        return clearPlaylist;
-    }, []);
+    // useEffect(() => {
+    //     return clearPlaylist;
+    // }, []);
 
     async function addNewFile(event) {
         var files = event.target.files;
@@ -154,6 +154,7 @@ export function Playlist(props) {
                 <PlaylistStorage
                     playlist={playlist}
                     onPlaylistLoad={(list) => {
+                        if (!list) return;
                         clearPlaylist();
                         setPlaylist(list);
                     }}

@@ -62,9 +62,9 @@ export default function SettingsModal(props) {
 
     return (
         <div>
-            <div onClick={showSettings} data-toggle="modal" style={style}>
+            <button className="btn shadow-none" onClick={showSettings} data-toggle="modal" style={style}>
                 <FontAwesomeIcon size="2x" icon={faCog} />
-            </div>
+            </button>
             <Modal show={show} title="Settings" onClose={close} onSave={save}>
                 <div className="form-group spacing-outer-bottom">
                     <label

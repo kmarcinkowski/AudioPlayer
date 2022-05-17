@@ -4,7 +4,7 @@ export default function Modal(props) {
         show && (
             <>
                 <div
-                    className={`modal show d-block ${props.className}`}
+                    className={`modal show d-block ${props.className ?? ""}`}
                     tabIndex="-1"
                     role="dialog"
                     data-bs-backdrop="static"
@@ -32,7 +32,7 @@ export default function Modal(props) {
                                         className="btn btn-primary"
                                         onClick={onSave}
                                     >
-                                        Save
+                                        {props.saveLabel ?? "Save"}
                                     </button>
                                 )}
                                 <button
@@ -41,7 +41,7 @@ export default function Modal(props) {
                                     data-dismiss="modal"
                                     onClick={onClose}
                                 >
-                                    Cancel
+                                    {props.closeLabel ?? "Cancel"}
                                 </button>
                             </div>
                         </div>
