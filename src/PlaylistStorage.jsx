@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { Fragment, useCallback, useRef, useState } from "react";
 import { db } from "./DBController";
 import { useLiveQuery } from "dexie-react-hooks";
 import Modal from "./Modal";
@@ -40,7 +40,7 @@ export default function PlaylistStorage(props) {
     };
 
     return (
-        <div>
+        <Fragment>
             <Dropdown
                 className="list-button"
                 label={<FontAwesomeIcon size="4x" icon={faEllipsisV} />}
@@ -99,6 +99,6 @@ export default function PlaylistStorage(props) {
                     />
                 </div>
             </Modal>
-        </div>
+        </Fragment>
     );
 }

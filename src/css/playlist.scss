@@ -17,8 +17,7 @@
         }
 
         &.active {
-            background-color: honeydew;
-            opacity: 0.7;
+            backdrop-filter: brightness(2.5);
         }
 
         .row {
